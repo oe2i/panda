@@ -1,0 +1,1 @@
+O:23:"PHPStan\Cache\CacheItem":2:{s:11:"variableKey";s:74:"v2-a1b28b4b5e4ffb78d21511cd9c04dc86c3eb5da7fe6ebc705f5036a7cb75d2ed-8.5.12";s:4:"data";a:3:{s:7:"classes";a:1:{s:55:"spatie\sluggable\actions\buildselfhealingroutekeyaction";b:1;}s:9:"functions";a:0:{}s:9:"constants";a:0:{}}}

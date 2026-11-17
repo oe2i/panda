@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Settings;
 
 use App\Concerns\ProfileValidationRules;
@@ -12,7 +14,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Profile settings')]
-class Profile extends Component
+final class Profile extends Component
 {
     use ProfileValidationRules;
 

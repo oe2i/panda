@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Spatie\Csp\Nonce\RandomString;
 use Spatie\Csp\Presets\Basic;
 
