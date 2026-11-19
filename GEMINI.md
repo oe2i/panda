@@ -103,6 +103,9 @@ This project has domain-specific skills available. You MUST activate the relevan
 - Use TitleCase for Enum keys: `FavoritePerson`, `BestLake`, `Monthly`.
 - Prefer PHPDoc blocks over inline comments. Only add inline comments for exceptionally complex logic.
 - Use array shape type definitions in PHPDoc blocks.
+- Always include `declare(strict_types=1);` at the top of PHP files.
+- Declare classes `final` by default unless inheritance is explicitly required.
+- Before finalizing PHP changes, run `composer types:check` (`phpstan analyse`), `composer lint:check` (`pint --parallel --test` and `rector --dry-run`), `composer test:type-coverage` (`pest --type-coverage --min=100`), and `vendor/bin/peck` to verify strictness and type coverage.
 
 === tests rules ===
 
