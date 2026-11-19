@@ -13,7 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         $teams = config('permission.teams');
+        /** @var array<string, string> $tableNames */
         $tableNames = config('permission.table_names');
+        /** @var array<string, string> $columnNames */
         $columnNames = config('permission.column_names');
         $pivotRole = $columnNames['role_pivot_key'] ?? 'role_id';
         $pivotPermission = $columnNames['permission_pivot_key'] ?? 'permission_id';
@@ -116,9 +118,12 @@ return new class extends Migration
             $table->primary([$pivotPermission, $pivotRole], 'role_has_permissions_permission_id_role_id_primary');
         });
 
+        $cacheStore = config('permission.cache.store');
+        $cacheKey = config('permission.cache.key');
+
         resolve(Factory::class)
-            ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
-            ->forget(config('permission.cache.key'));
+            ->store(is_string($cacheStore) && $cacheStore !== 'default' ? $cacheStore : null)
+            ->forget(is_string($cacheKey) ? $cacheKey : 'spatie.permission.cache');
     }
 
     /**
@@ -126,6 +131,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        /** @var array<string, string> $tableNames */
         $tableNames = config('permission.table_names');
 
         throw_if(empty($tableNames), 'Error: config/permission.php not found and defaults could not be merged. Please publish the package configuration before proceeding, or drop the tables manually.');

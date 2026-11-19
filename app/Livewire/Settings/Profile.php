@@ -27,8 +27,14 @@ final class Profile extends Component
      */
     public function mount(): void
     {
-        $this->name = Auth::user()->name;
-        $this->email = Auth::user()->email;
+        $user = Auth::user();
+
+        if ($user === null) {
+            return;
+        }
+
+        $this->name = $user->name;
+        $this->email = $user->email;
     }
 
     /**
@@ -38,12 +44,21 @@ final class Profile extends Component
     {
         $user = Auth::user();
 
+        if ($user === null) {
+            return;
+        }
+
         if (config('fortify.lowercase_usernames')) {
             $this->email = Str::lower($this->email);
         }
 
         $validated = $this->validate($this->profileRules($user->id));
 
+        if (! is_array($validated)) {
+            return;
+        }
+
+        /** @var array<string, mixed> $validated */
         $user->fill($validated);
 
         if ($user->isDirty('email')) {
@@ -61,6 +76,10 @@ final class Profile extends Component
     public function resendVerificationNotification(): void
     {
         $user = Auth::user();
+
+        if ($user === null) {
+            return;
+        }
 
         if ($user->hasVerifiedEmail()) {
             $this->redirectIntended(default: route('dashboard', absolute: false));
