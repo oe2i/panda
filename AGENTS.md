@@ -94,6 +94,13 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - Declare classes `final` by default unless inheritance is explicitly required.
 - Before finalizing PHP changes, run `composer types:check` (`phpstan analyse`), `composer lint:check` (`pint --parallel --test` and `rector --dry-run`), `composer test:type-coverage` (`pest --type-coverage --min=100`), and `vendor/bin/peck` to verify strictness and type coverage.
 
+=== architecture & spatie conventions ===
+
+# Data & Permissions
+
+- Use `spatie/laravel-data` (`Data` classes) for typed DTOs, request validation, and transformation instead of passing raw associative arrays between controllers, Livewire components, and actions/services.
+- Use `spatie/laravel-permission` (`HasRoles`) with Laravel's native `Gate`, `$user->can()`, and `@can` directives for authorization rather than hardcoding role string checks.
+
 === deployments rules ===
 
 # Deployment
