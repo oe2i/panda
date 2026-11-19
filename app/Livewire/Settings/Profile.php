@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Settings;
 
 use App\Concerns\ProfileValidationRules;
@@ -12,7 +14,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Profile settings')]
-class Profile extends Component
+final class Profile extends Component
 {
     use ProfileValidationRules;
 
@@ -25,8 +27,14 @@ class Profile extends Component
      */
     public function mount(): void
     {
-        $this->name = Auth::user()->name;
-        $this->email = Auth::user()->email;
+        $user = Auth::user();
+
+        if ($user === null) {
+            return;
+        }
+
+        $this->name = $user->name;
+        $this->email = $user->email;
     }
 
     /**
@@ -36,12 +44,21 @@ class Profile extends Component
     {
         $user = Auth::user();
 
+        if ($user === null) {
+            return;
+        }
+
         if (config('fortify.lowercase_usernames')) {
             $this->email = Str::lower($this->email);
         }
 
         $validated = $this->validate($this->profileRules($user->id));
 
+        if (! is_array($validated)) {
+            return;
+        }
+
+        /** @var array<string, mixed> $validated */
         $user->fill($validated);
 
         if ($user->isDirty('email')) {
@@ -59,6 +76,10 @@ class Profile extends Component
     public function resendVerificationNotification(): void
     {
         $user = Auth::user();
+
+        if ($user === null) {
+            return;
+        }
 
         if ($user->hasVerifiedEmail()) {
             $this->redirectIntended(default: route('dashboard', absolute: false));

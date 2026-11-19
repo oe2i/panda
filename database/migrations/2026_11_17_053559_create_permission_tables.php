@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Contracts\Cache\Factory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,7 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         $teams = config('permission.teams');
+        /** @var array<string, string> $tableNames */
         $tableNames = config('permission.table_names');
+        /** @var array<string, string> $columnNames */
         $columnNames = config('permission.column_names');
         $pivotRole = $columnNames['role_pivot_key'] ?? 'role_id';
         $pivotPermission = $columnNames['permission_pivot_key'] ?? 'permission_id';
@@ -23,7 +26,7 @@ return new class extends Migration
         /**
          * See `docs/prerequisites.md` for suggested lengths on 'name' and 'guard_name' if "1071 Specified key was too long" errors are encountered.
          */
-        Schema::create($tableNames['permissions'], static function (Blueprint $table) {
+        Schema::create($tableNames['permissions'], static function (Blueprint $table): void {
             $table->id(); // permission id
             $table->string('name');
             $table->string('guard_name');
@@ -35,12 +38,13 @@ return new class extends Migration
         /**
          * See `docs/prerequisites.md` for suggested lengths on 'name' and 'guard_name' if "1071 Specified key was too long" errors are encountered.
          */
-        Schema::create($tableNames['roles'], static function (Blueprint $table) use ($teams, $columnNames) {
+        Schema::create($tableNames['roles'], static function (Blueprint $table) use ($teams, $columnNames): void {
             $table->id(); // role id
             if ($teams || config('permission.testing')) { // permission.testing is a fix for sqlite testing
                 $table->unsignedBigInteger($columnNames['team_foreign_key'])->nullable();
                 $table->index($columnNames['team_foreign_key'], 'roles_team_foreign_key_index');
             }
+
             $table->string('name');
             $table->string('guard_name');
             $table->timestamps();
@@ -51,7 +55,7 @@ return new class extends Migration
             }
         });
 
-        Schema::create($tableNames['model_has_permissions'], static function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
+        Schema::create($tableNames['model_has_permissions'], static function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams): void {
             $table->unsignedBigInteger($pivotPermission);
 
             $table->string('model_type');
@@ -74,7 +78,7 @@ return new class extends Migration
             }
         });
 
-        Schema::create($tableNames['model_has_roles'], static function (Blueprint $table) use ($tableNames, $columnNames, $pivotRole, $teams) {
+        Schema::create($tableNames['model_has_roles'], static function (Blueprint $table) use ($tableNames, $columnNames, $pivotRole, $teams): void {
             $table->unsignedBigInteger($pivotRole);
 
             $table->string('model_type');
@@ -97,7 +101,7 @@ return new class extends Migration
             }
         });
 
-        Schema::create($tableNames['role_has_permissions'], static function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission) {
+        Schema::create($tableNames['role_has_permissions'], static function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission): void {
             $table->unsignedBigInteger($pivotPermission);
             $table->unsignedBigInteger($pivotRole);
 
@@ -114,9 +118,12 @@ return new class extends Migration
             $table->primary([$pivotPermission, $pivotRole], 'role_has_permissions_permission_id_role_id_primary');
         });
 
-        app('cache')
-            ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
-            ->forget(config('permission.cache.key'));
+        $cacheStore = config('permission.cache.store');
+        $cacheKey = config('permission.cache.key');
+
+        resolve(Factory::class)
+            ->store(is_string($cacheStore) && $cacheStore !== 'default' ? $cacheStore : null)
+            ->forget(is_string($cacheKey) ? $cacheKey : 'spatie.permission.cache');
     }
 
     /**
@@ -124,6 +131,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        /** @var array<string, string> $tableNames */
         $tableNames = config('permission.table_names');
 
         throw_if(empty($tableNames), 'Error: config/permission.php not found and defaults could not be merged. Please publish the package configuration before proceeding, or drop the tables manually.');

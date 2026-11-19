@@ -1,8 +1,8 @@
-# Blade and view best practices
+# Blade & Views Best Practices
 
-## Use `$attributes->merge()` in component templates
+## Use `$attributes->merge()` in Component Templates
 
-Use the component attribute bag so callers can add attributes. `merge()` combines default attributes with caller-provided values. Class values receive special merging behavior.
+Hardcoding classes prevents consumers from adding their own. `merge()` combines class attributes cleanly.
 
 ```blade
 <div {{ $attributes->merge(['class' => 'alert alert-'.$type]) }}>
@@ -10,27 +10,27 @@ Use the component attribute bag so callers can add attributes. `merge()` combine
 </div>
 ```
 
-## Use `@pushOnce` for per-component scripts
+## Use `@pushOnce` for Per-Component Scripts
 
-If a component renders repeatedly, `@push` adds its script on every render. Use a consistently named `@pushOnce` block to add that content once per rendered response.
+If a component renders inside a `@foreach`, `@push` inserts the script N times. `@pushOnce` guarantees it's included exactly once.
 
-## Prefer components for explicit interfaces
+## Prefer Blade Components Over `@include`
 
-Use a Blade component when a reusable interface benefits from explicit props, an attribute bag, or slots. An include still suits a small partial that intentionally uses the current view data. Pass an explicit data array when implicit variable sharing would hide the partial's dependencies.
+`@include` shares all parent variables implicitly (hidden coupling). Components have explicit props, attribute bags, and slots.
 
-## Share compatible view data with a view composer
+## Use View Composers for Shared View Data
 
-Use a view composer to centralize the data that one or more named Blade views need every time Laravel renders them. Keep the composer compatible with every view it targets, and avoid broad wildcards when views require different data shapes. A view composer runs when Laravel renders the matching view. It does not supply data to JSON, streamed, or other non-view responses.
+If every controller rendering a sidebar must pass `$categories`, that's duplicated code. A View Composer centralizes it.
 
-## Return Blade fragments for partial rendering
+## Use Blade Fragments for Partial Re-Renders (htmx/Turbo)
 
-A route can return either a full view or a named fragment for clients such as htmx or Turbo.
+A single view can return either the full page or just a fragment, keeping routing clean.
 
 ```php
 return view('dashboard', compact('users'))
     ->fragmentIf($request->hasHeader('HX-Request'), 'user-list');
 ```
 
-## Share parent component props with `@aware`
+## Use `@aware` for Deeply Nested Component Props
 
-Use `@aware` when a nested component needs a prop explicitly passed to an ancestor component. `@aware` does not expose an ancestor's default prop value unless that value was passed through the attribute bag.
+Avoids re-passing parent props through every level of nested components.

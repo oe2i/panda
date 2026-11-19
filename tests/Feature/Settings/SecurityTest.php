@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Features;
 use Livewire\Livewire;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->skipUnlessFortifyHas(Features::twoFactorAuthentication());
 
     Features::twoFactorAuthentication([
@@ -19,7 +19,7 @@ beforeEach(function () {
     ]);
 });
 
-test('security settings page can be rendered', function () {
+test('security settings page can be rendered', function (): void {
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)
@@ -34,7 +34,7 @@ test('security settings page can be rendered', function () {
     $response->assertSee('Enable 2FA');
 });
 
-test('security settings page requires password confirmation when enabled', function () {
+test('security settings page requires password confirmation when enabled', function (): void {
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)
@@ -43,7 +43,7 @@ test('security settings page requires password confirmation when enabled', funct
     $response->assertRedirect(route('password.confirm'));
 });
 
-test('security settings page renders without two factor when feature is disabled', function () {
+test('security settings page renders without two factor when feature is disabled', function (): void {
     config(['fortify.features' => []]);
 
     $user = User::factory()->create();
@@ -58,7 +58,7 @@ test('security settings page renders without two factor when feature is disabled
         ->assertDontSee('Two-factor authentication');
 });
 
-test('two factor authentication disabled when confirmation abandoned between requests', function () {
+test('two factor authentication disabled when confirmation abandoned between requests', function (): void {
     $user = User::factory()->create();
 
     $user->forceFill([
@@ -80,7 +80,7 @@ test('two factor authentication disabled when confirmation abandoned between req
     ]);
 });
 
-test('two factor setup does not reveal the secret when already enabled', function () {
+test('two factor setup does not reveal the secret when already enabled', function (): void {
     $user = User::factory()->create();
 
     $user->forceFill([
@@ -99,7 +99,7 @@ test('two factor setup does not reveal the secret when already enabled', functio
     expect(decrypt($user->refresh()->two_factor_secret))->toBe('test-secret');
 });
 
-test('recovery codes are only loaded when requested', function () {
+test('recovery codes are only loaded when requested', function (): void {
     $user = User::factory()->create();
 
     $user->forceFill([
@@ -116,7 +116,7 @@ test('recovery codes are only loaded when requested', function () {
         ->assertSet('recoveryCodes', ['code1', 'code2']);
 });
 
-test('password can be updated', function () {
+test('password can be updated', function (): void {
     $user = User::factory()->create([
         'password' => Hash::make('password'),
     ]);
@@ -134,7 +134,7 @@ test('password can be updated', function () {
     expect(Hash::check('new-password', $user->refresh()->password))->toBeTrue();
 });
 
-test('correct password must be provided to update password', function () {
+test('correct password must be provided to update password', function (): void {
     $user = User::factory()->create([
         'password' => Hash::make('password'),
     ]);
