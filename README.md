@@ -278,6 +278,12 @@ See [docs/release.md](docs/release.md) for full setup, branch guard configuratio
 
 ---
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a history of notable changes, grouped by `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, and `Security`.
+
+---
+
 ## Author
 
 - **Anthony Osawere** — Software Engineer
