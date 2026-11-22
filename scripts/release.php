@@ -20,9 +20,7 @@ if (! in_array($bump, ['major', 'minor', 'patch'], true)) {
 $latestTag = trim((string) shell_exec('git describe --tags --abbrev=0 2>NUL'));
 
 if ($latestTag === '') {
-    $major = 0;
-    $minor = 0;
-    $patch = 0;
+    $newTag = 'v1.0.0';
 } else {
     $version = ltrim($latestTag, 'v');
     $parts = explode('.', $version);
@@ -35,15 +33,15 @@ if ($latestTag === '') {
     $major = (int) $parts[0];
     $minor = (int) $parts[1];
     $patch = (int) $parts[2];
+
+    match ($bump) {
+        'major' => [$major++, $minor = 0, $patch = 0],
+        'minor' => [$minor++, $patch = 0],
+        'patch' => $patch++,
+    };
+
+    $newTag = "v{$major}.{$minor}.{$patch}";
 }
-
-match ($bump) {
-    'major' => [$major++, $minor = 0, $patch = 0],
-    'minor' => [$minor++, $patch = 0],
-    'patch' => $patch++,
-};
-
-$newTag = "v{$major}.{$minor}.{$patch}";
 
 echo "Bumping {$bump}: " . ($latestTag !== '' ? $latestTag : 'none') . " -> {$newTag}\n";
 
@@ -57,6 +55,13 @@ passthru("git push origin {$newTag}", $pushExit);
 if ($pushExit !== 0) {
     fwrite(STDERR, "Failed to push git tag {$newTag}.\n");
     exit($pushExit);
+}
+
+if (in_array($bump, ['minor', 'major'], true)) {
+    passthru("gh release create {$newTag} --generate-notes", $ghExit);
+    if ($ghExit !== 0) {
+        fwrite(STDERR, "Tag {$newTag} was pushed, but creating the GitHub Release failed (ensure 'gh' CLI is installed and authenticated).\n");
+    }
 }
 
 echo "Released {$newTag} successfully.\n";

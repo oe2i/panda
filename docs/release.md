@@ -18,10 +18,11 @@ composer release -- major   # v1.1.0 -> v2.0.0 (or none -> v1.0.0)
 ## How It Works
 
 1. Verifies the current git branch matches `$allowedBranch` (`main` by default).
-2. Reads the latest git tag (`git describe --tags --abbrev=0`). If no tags exist yet, it starts from `v0.0.0`.
-3. Increments the `major`, `minor`, or `patch` segment.
+2. Reads the latest git tag (`git describe --tags --abbrev=0`). If no tags exist yet, the first release starts at `v1.0.0`.
+3. Increments the `major`, `minor`, or `patch` segment for subsequent releases.
 4. Creates an annotated git tag (`git tag -a vX.Y.Z -m "Release vX.Y.Z"`).
 5. Pushes the tag to `origin` (`git push origin vX.Y.Z`).
+6. For `minor` and `major` bumps, creates a GitHub Release (`gh release create vX.Y.Z --generate-notes`). Requires the [GitHub CLI (`gh`)](https://cli.github.com/) to be installed and authenticated.
 
 ## Configuration
 
