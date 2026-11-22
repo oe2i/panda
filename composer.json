@@ -4,14 +4,11 @@
     "type": "project",
     "description": "Opinionated Laravel 13 + Livewire 4 + Flux UI starter kit.",
     "keywords": [
+        "oe2i",
+        "panda",
         "laravel",
-        "framework",
         "livewire",
-        "flux",
-        "starter-kit",
-        "spatie",
-        "pest",
-        "phpstan"
+        "starter-kit"
     ],
     "homepage": "https://github.com/oe2i/panda",
     "readme": "README.md",
