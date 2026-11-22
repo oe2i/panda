@@ -1,13 +1,40 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/livewire-starter-kit",
+    "name": "oe2i/panda",
     "type": "project",
-    "description": "The official Laravel starter kit for Livewire.",
+    "description": "Opinionated Laravel 13 + Livewire 4 + Flux UI starter kit.",
     "keywords": [
         "laravel",
-        "framework"
+        "framework",
+        "livewire",
+        "flux",
+        "starter-kit",
+        "spatie",
+        "pest",
+        "phpstan"
     ],
+    "homepage": "https://github.com/oe2i/panda",
+    "readme": "README.md",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Anthony Osawere",
+            "email": "anthony@osawere.com",
+            "homepage": "https://www.osawere.com",
+            "role": "Software Engineer"
+        },
+        {
+            "name": "oe2i",
+            "email": "hi@oe2i.com",
+            "homepage": "https://oe2i.com",
+            "role": "Organization"
+        }
+    ],
+    "support": {
+        "email": "hi@oe2i.com",
+        "issues": "https://github.com/oe2i/panda/issues",
+        "source": "https://github.com/oe2i/panda"
+    },
     "require": {
         "php": "^8.5",
         "laravel/chisel": "^0.1.0",
