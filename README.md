@@ -54,6 +54,12 @@ This runs:
 
 ---
 
+## Initialization
+
+After setting up a new project, see [docs/initialization.md](docs/initialization.md) for post-setup initialization steps (publishing Laravel stubs, mail views, and notification templates).
+
+---
+
 ## Development
 
 Start the development environment (server, queue/logs, and Vite+ dev server):
