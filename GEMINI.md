@@ -166,4 +166,11 @@ This project has domain-specific skills available. You MUST activate the relevan
 - Run tests: `php artisan test --compact` or filter: `php artisan test --compact --filter=testName`.
 - Do NOT delete tests without approval.
 
+=== git & changelog rules ===
+
+# Git Commits & Changelog
+
+- Follow the commit format defined in `.gitmessage` and `docs/commits.md`: `<type>(<scope>): <short summary>` with an optional itemized body (`- ...`).
+- Update `CHANGELOG.md` under `[Unreleased]` (using `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`) when making notable changes or preparing a commit.
+
 </laravel-boost-guidelines>

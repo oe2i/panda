@@ -37,6 +37,7 @@
     },
     "require": {
         "php": "^8.5",
+        "laravel/ai": "*",
         "laravel/chisel": "^0.1.0",
         "laravel/folio": "^1.3",
         "laravel/fortify": "^1.37.2",
@@ -75,12 +76,16 @@
         "nunomaduro/collision": "^8.9.3",
         "peckphp/peck": "^0.3.0",
         "pestphp/pest": "^5.3",
+        "pestphp/pest-plugin-agent": "*",
         "pestphp/pest-plugin-arch": "^5.0",
         "pestphp/pest-plugin-browser": "^5.2",
+        "pestphp/pest-plugin-evals": "*",
         "pestphp/pest-plugin-faker": "^5.0",
         "pestphp/pest-plugin-laravel": "^5.0",
         "pestphp/pest-plugin-livewire": "^5.0",
+        "pestphp/pest-plugin-phpstan": "*",
         "pestphp/pest-plugin-profanity": "^5.0",
+        "pestphp/pest-plugin-rector": "*",
         "pestphp/pest-plugin-stressless": "^5.0",
         "pestphp/pest-plugin-type-coverage": "^5.1",
         "rector/rector": "^2.8",
@@ -127,6 +132,11 @@
         "types:check": [
             "phpstan analyse"
         ],
+        "vet:trust": [
+            "composer install --no-plugins",
+            "vet --fresh"
+        ],
+        "release": "@php scripts/release.php",
         "test": [
             "@php artisan config:clear --ansi",
             "@lint:check",

@@ -1,0 +1,21 @@
+# <type>(<scope>): <short summary>
+#
+# - Optional detail or itemized change 1
+# - Optional detail or itemized change 2
+#
+# Types:
+#   feature   - A new feature or capability
+#   bugfix    - A standard bug fix during development
+#   hotfix    - An urgent fix applied directly to production
+#   patch     - A small, targeted adjustment or minor fix
+#   refactor  - Code restructuring without changing behavior
+#   perf      - Performance improvements
+#   chore     - Build tasks, dependencies, configs, or housekeeping
+#   routine   - Recurring maintenance (e.g. vet:trust, dependency bumps)
+#   release   - Version bumps, changelogs, or release tagging
+#   ci        - CI/CD workflows and pipeline changes
+#   build     - Build system, Vite, Docker, or asset bundling changes
+#   docs      - Documentation changes
+#   test      - Adding or updating tests
+#   style     - Formatting, linting, or style fixes (no logic change)
+#   revert    - Reverting a previous commit

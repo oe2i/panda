@@ -182,4 +182,11 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - Rerun a test after each change to it.
 - Run `vendor/bin/pest` to call the test runner directly. It accepts the same file path and `--filter=testName` arguments.
 
+=== git & changelog rules ===
+
+# Git Commits & Changelog
+
+- Follow the commit format defined in `.gitmessage` and `docs/commits.md`: `<type>(<scope>): <short summary>` with an optional itemized body (`- ...`).
+- Update `CHANGELOG.md` under `[Unreleased]` (using `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`) when making notable changes or preparing a commit.
+
 </laravel-boost-guidelines>

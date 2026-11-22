@@ -219,9 +219,10 @@ If you need to publish additional configs/assets or re-initialize a package:
   php artisan sail:install
   ./vendor/bin/sail up -d
   ```
-- **Laravel Vet** (verify dependency integrity against `vet.json`):
+- **Laravel Vet** (verify dependency integrity against `vet.json`, or trust all currently installed packages):
   ```bash
   ./vendor/bin/vet
+  composer vet:trust   # Re-records all packages currently in vendor/ into vet.json (vet --fresh)
   ```
 - **Pest / Peck / Rector** (already initialized; re-init only if resetting):
   ```bash
@@ -260,6 +261,20 @@ If you need to publish additional configs/assets or re-initialize a package:
   ```bash
   php artisan boost:install
   ```
+
+---
+
+## Release Management
+
+Panda includes an automated semver release script ([`scripts/release.php`](scripts/release.php)) that creates and pushes annotated git tags from `main`:
+
+```bash
+composer release -- patch   # v1.0.0 -> v1.0.1 (or none -> v0.0.1)
+composer release -- minor   # v1.0.1 -> v1.1.0 (or none -> v0.1.0)
+composer release -- major   # v1.1.0 -> v2.0.0 (or none -> v1.0.0)
+```
+
+See [docs/release.md](docs/release.md) for full setup, branch guard configuration, and behavior details.
 
 ---
 
