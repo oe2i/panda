@@ -284,6 +284,12 @@ See [docs/release.md](docs/release.md) for full setup, branch guard configuratio
 
 ---
 
+## CI & Push Workflow
+
+Run `composer push:spartan` to execute `composer ci:check` locally before pushing to `spartan`. See [docs/ci.md](docs/ci.md) for details on local checks and GitHub Actions CI.
+
+---
+
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md) for a history of notable changes, grouped by `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, and `Security`.

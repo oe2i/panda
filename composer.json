@@ -126,6 +126,10 @@
             "Composer\\Config::disableProcessTimeout",
             "@test"
         ],
+        "push:spartan": [
+            "@ci:check",
+            "git push origin spartan"
+        ],
         "types:check": [
             "phpstan analyse"
         ],
