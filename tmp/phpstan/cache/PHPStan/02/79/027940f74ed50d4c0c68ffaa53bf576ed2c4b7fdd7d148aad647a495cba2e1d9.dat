@@ -1,1 +1,0 @@
-O:23:"PHPStan\Cache\CacheItem":2:{s:11:"variableKey";s:74:"v2-70c20e88bbe097bab0bc0a60cb04f8fa3b8dcdeaff2b924a08efb0b0631cb980-8.5.12";s:4:"data";a:3:{s:7:"classes";a:1:{s:45:"spatie\laraveldata\ruleinferrers\ruleinferrer";b:1;}s:9:"functions";a:0:{}s:9:"constants";a:0:{}}}

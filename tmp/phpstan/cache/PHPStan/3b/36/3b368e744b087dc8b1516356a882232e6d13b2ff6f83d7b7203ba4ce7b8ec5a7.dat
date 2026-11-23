@@ -1,1 +1,0 @@
-O:23:"PHPStan\Cache\CacheItem":2:{s:11:"variableKey";s:74:"v2-fb5d9f46a8fc0fbabf06162ff966489f95cb3e5acbd6483fd3862b7db0949482-8.5.12";s:4:"data";a:3:{s:7:"classes";a:1:{s:46:"spatie\laraveldata\casts\datetimeinterfacecast";b:1;}s:9:"functions";a:0:{}s:9:"constants";a:0:{}}}
