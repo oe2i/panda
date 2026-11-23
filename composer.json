@@ -118,7 +118,7 @@
             "pint --parallel"
         ],
         "lint:check": [
-            "pint --parallel --test",
+            "pint --test",
             "rector --dry-run"
         ],
         "test:type-coverage": "pest --type-coverage --min=100",

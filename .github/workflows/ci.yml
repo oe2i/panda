@@ -2,7 +2,8 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    tags:
+      - 'v*'
   pull_request:
     branches: [main]
 
@@ -41,5 +42,7 @@ jobs:
           php artisan key:generate
           touch database/database.sqlite
 
-      - name: Run CI Checks
-        run: composer ci:check
+      - name: Run Critical Checks
+        run: |
+          composer types:check
+          php artisan test

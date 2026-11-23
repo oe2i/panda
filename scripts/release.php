@@ -43,7 +43,7 @@ if ($latestTag === '') {
     $newTag = "v{$major}.{$minor}.{$patch}";
 }
 
-echo "Bumping {$bump}: " . ($latestTag !== '' ? $latestTag : 'none') . " -> {$newTag}\n";
+echo "Bumping {$bump}: ".($latestTag !== '' ? $latestTag : 'none')." -> {$newTag}\n";
 
 passthru("git tag -a {$newTag} -m \"Release {$newTag}\"", $tagExit);
 if ($tagExit !== 0) {
